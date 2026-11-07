@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Virtual environments (uv creates .venv)
+.venv/
+venv/
+
+# Tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Local runtime data: checkpoints, vector store, MLflow, reports
+*.sqlite
+*.sqlite3
+*.db
+qdrant_storage/
+mlruns/
+mlartifacts/
+reports/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
