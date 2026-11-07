@@ -1,0 +1,11 @@
+# Use LF line endings everywhere, also on Windows checkouts.
+* text=auto eol=lf
+
+# Windows batch scripts need CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary files (demo GIFs, screenshots).
+*.png binary
+*.jpg binary
+*.gif binary
