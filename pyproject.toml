@@ -31,6 +31,8 @@ build-backend = "uv_build"
 [dependency-groups]
 dev = [
     "mypy>=2.4.1",
+    "pytest>=9.2.0",
+    "pytest-cov>=7.1.0",
     "ruff>=0.17.4",
 ]
 
@@ -53,5 +55,21 @@ select = [
 
 [tool.mypy]
 strict = true
-files = ["src"]
+files = ["src", "tests"]
 pretty = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+markers = [
+    "integration: needs network access or real API keys (deselect with '-m \"not integration\"')",
+]
+
+[tool.coverage.run]
+source = ["ci_triage_agent"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 80
