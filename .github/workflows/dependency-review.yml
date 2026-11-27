@@ -1,0 +1,27 @@
+name: Dependency review
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # Blocks PRs that add dependencies with known vulnerabilities or licenses outside the allow list.
+      - uses: actions/dependency-review-action@bbc44d14a204704ccc493733616cd1e93a0321ec # v5.0.1
+        with:
+          fail-on-severity: low
+          # Dev tools run in CI with access to tokens, so their vulnerabilities count too.
+          fail-on-scopes: runtime, development
+          # Permissive licenses compatible with MIT. MPL-2.0 is weak copyleft at file level only.
+          allow-licenses: >-
+            MIT, MIT-0, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC, 0BSD,
+            PSF-2.0, Python-2.0, Python-2.0.1, MPL-2.0, Unlicense, CC0-1.0
