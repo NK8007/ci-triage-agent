@@ -17,15 +17,21 @@ repos:
     hooks:
       - id: uv-lock
 
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.17.4
-    hooks:
-      - id: ruff-check
-        args: [--fix]
-      - id: ruff-format
-
+  # Ruff and mypy run from the project environment, so uv.lock is the single source of their versions.
   - repo: local
     hooks:
+      - id: ruff-check
+        name: ruff check
+        entry: uv run ruff check --fix --force-exclude
+        language: system
+        types_or: [python, pyi]
+        require_serial: true
+      - id: ruff-format
+        name: ruff format
+        entry: uv run ruff format --force-exclude
+        language: system
+        types_or: [python, pyi]
+        require_serial: true
       - id: mypy
         name: mypy
         entry: uv run mypy
